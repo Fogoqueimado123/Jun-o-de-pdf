@@ -1,223 +1,238 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Juntar PDFs</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juntar PDFs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
 
-      .container {
-        max-width: 600px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-      .custom-btn {
-        background: #e63946;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 8px;
-        cursor: pointer;
-        display: inline-block;
-        margin-bottom: 15px;
-        font-size: 16px;
-        font-weight: bold;
-      }
+    h1 {
+      margin-bottom: 10px;
+    }
 
-      .custom-btn:hover {
-        background: #d62828;
-      }
+    p {
+      margin-bottom: 20px;
+    }
 
-      .merge-btn {
-        background: #06d6a0;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-      }
+    .custom-btn,
+    .merge-btn,
+    .reload-btn {
+      display: block;
+      width: 100%;
+      max-width: 350px;
+      margin: 10px auto;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
 
-      .merge-btn:hover {
-        background: #05b384;
-      }
-      .reload-btn {
-        background: #457b9d;
-        color: white;
-        padding: 15px 25px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        margin-top: 10px;
-      }
+    .custom-btn {
+      background: #e63946;
+      color: white;
+    }
+    .custom-btn:hover {
+      background: #d62828;
+    }
 
-      .dividirpdf
-      {
-        font-size: 18px;
-        text-decoration: none;
-        color: #1d3557;
-        transition: 3s;
-      }
-      .dividirpdf:hover
-      {
-        text-decoration: underline;
-      }
-      .reload-btn:hover {
-        background: #1d3557;
-      }
+    .merge-btn {
+      background: #06d6a0;
+      color: white;
+    }
+    .merge-btn:hover {
+      background: #05b384;
+    }
 
-      #fileList {
-        text-align: left;
-        margin-top: 20px;
-      }
+    .reload-btn {
+      background: #457b9d;
+      color: white;
+      display: none;
+    }
+    .reload-btn:hover {
+      background: #1d3557;
+    }
 
+    .dividirpdf {
+      text-decoration: none;
+      color: #1d3557;
+      display: inline-block;
+      margin-top: 15px;
+    }
+    .dividirpdf:hover {
+      text-decoration: underline;
+    }
+
+    #fileList {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      flex-wrap: wrap;
+    }
+
+    .file-item button {
+      background: #ff595e;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    .file-item button:hover {
+      background: #d62828;
+    }
+
+    /* Ajuste extra para mobile */
+    @media (max-width: 480px) {
       .file-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f8f9fa;
-        padding: 10px;
-        margin: 5px 0;
-        border-radius: 5px;
+        flex-direction: column;
+        align-items: flex-start;
       }
-
       .file-item button {
-        background: #ff595e;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
+        width: 100%;
       }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Juntar arquivos PDF</h1>
+    <p>Mesclar e juntar PDFs em qualquer ordem. Fácil e rápido!</p>
 
-      .file-item button:hover {
-        background: #d62828;
+    <label for="pdfInput" class="custom-btn">Selecionar arquivos PDF</label>
+    <input type="file" id="pdfInput" accept="application/pdf" multiple hidden />
+
+    <div id="fileList"></div>
+
+    <button id="mergeBtn" class="merge-btn">Juntar PDFs</button>
+    <a href="https://fogoqueimado123.github.io/DividirPDF/" class="dividirpdf">Dividir PDF´s</a>
+    <button id="reloadBtn" class="reload-btn">Juntar Outro PDF</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script>
+    let selectedFiles = [];
+
+    // Ajuste automático de fontes e botões baseado no dispositivo
+    function ajustarLayout() {
+      const largura = window.innerWidth;
+      const botoes = document.querySelectorAll(".custom-btn, .merge-btn, .reload-btn");
+      const titulo = document.querySelector("h1");
+      const texto = document.querySelector("p");
+
+      if (largura <= 480) {
+        // Celular
+        titulo.style.fontSize = "1.5rem";
+        texto.style.fontSize = "1rem";
+        botoes.forEach(btn => {
+          btn.style.fontSize = "1rem";
+          btn.style.padding = "12px";
+        });
+      } else if (largura <= 768) {
+        // Tablet
+        titulo.style.fontSize = "1.8rem";
+        texto.style.fontSize = "1.1rem";
+        botoes.forEach(btn => {
+          btn.style.fontSize = "1.05rem";
+          btn.style.padding = "14px";
+        });
+      } else {
+        // Computador / Notebook
+        titulo.style.fontSize = "2rem";
+        texto.style.fontSize = "1.2rem";
+        botoes.forEach(btn => {
+          btn.style.fontSize = "1.1rem";
+          btn.style.padding = "15px";
+        });
       }
+    }
 
-      @media (max-width: 600px) {
-        .custom-btn,
-        .merge-btn {
-          width: 100%;
-          font-size: 14px;
+    window.addEventListener("resize", ajustarLayout);
+    window.addEventListener("load", ajustarLayout);
+
+    // Função para selecionar arquivos
+    document.getElementById("pdfInput").addEventListener("change", function (event) {
+      const files = Array.from(event.target.files);
+      files.forEach(file => {
+        if (!selectedFiles.some(f => f.name === file.name)) {
+          selectedFiles.push(file);
         }
-      }
-    </style>
-    <div class="container">
-      <h1>Juntar arquivos PDF</h1>
-      <p>Mesclar e juntar PDFs em qualquer ordem. Fácil e rápido!</p>
-
-      <label for="pdfInput" class="custom-btn">Selecionar arquivos PDF</label>
-      <input
-        type="file"
-        id="pdfInput"
-        accept="application/pdf"
-        multiple
-        hidden
-      />
-
-      <div id="fileList"></div>
-
-      <button id="mergeBtn" class="merge-btn">Juntar PDFs</button>
-        <a href="https://fogoqueimado123.github.io/DividirPDF/" class="dividirpdf">Dividir PDF´S</a>
-      <button id="reloadBtn" class="reload-btn" style="display: none">
-        Juntar Outro PDF
-      </button>
-    </div>
-    <script>
-      let selectedFiles = [];
-
-      document
-        .getElementById("pdfInput")
-        .addEventListener("change", function (event) {
-          const files = Array.from(event.target.files);
-
-          files.forEach((file) => {
-            if (!selectedFiles.some((f) => f.name === file.name)) {
-              selectedFiles.push(file);
-            }
-          });
-
-          renderFileList();
-        });
-
-      function renderFileList() {
-        const fileList = document.getElementById("fileList");
-        fileList.innerHTML = "";
-
-        selectedFiles.forEach((file, index) => {
-          const div = document.createElement("div");
-          div.classList.add("file-item");
-
-          div.innerHTML = `
-            ${file.name}
-            <button onclick="removeFile(${index})">Remover</button>
-        `;
-
-          fileList.appendChild(div);
-        });
-      }
-
-      function removeFile(index) {
-        selectedFiles.splice(index, 1);
-        renderFileList();
-      }
-
-      document
-        .getElementById("mergeBtn")
-        .addEventListener("click", async () => {
-          if (selectedFiles.length < 2) {
-            alert("Selecione pelo menos 2 PDFs para juntar.");
-            return;
-          }
-
-          const mergedPdf = await PDFLib.PDFDocument.create();
-
-          for (const file of selectedFiles) {
-            const arrayBuffer = await file.arrayBuffer();
-            const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-            const copiedPages = await mergedPdf.copyPages(
-              pdf,
-              pdf.getPageIndices()
-            );
-            copiedPages.forEach((page) => mergedPdf.addPage(page));
-          }
-
-          const mergedPdfBytes = await mergedPdf.save();
-
-          const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
-          const url = URL.createObjectURL(blob);
-
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "PDF-Mesclado.pdf";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-
-          document.getElementById("reloadBtn").style.display = "inline-block";
-        });
-
-      document.getElementById("reloadBtn").addEventListener("click", () => {
-        location.reload();
       });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+      renderFileList();
+    });
+
+    function renderFileList() {
+      const fileList = document.getElementById("fileList");
+      fileList.innerHTML = "";
+      selectedFiles.forEach((file, index) => {
+        const div = document.createElement("div");
+        div.classList.add("file-item");
+        div.innerHTML = `${file.name} <button onclick="removeFile(${index})">Remover</button>`;
+        fileList.appendChild(div);
+      });
+    }
+
+    function removeFile(index) {
+      selectedFiles.splice(index, 1);
+      renderFileList();
+    }
+
+    // Mesclar PDFs
+    document.getElementById("mergeBtn").addEventListener("click", async () => {
+      if (selectedFiles.length < 2) {
+        alert("Selecione pelo menos 2 PDFs para juntar.");
+        return;
+      }
+      const mergedPdf = await PDFLib.PDFDocument.create();
+      for (const file of selectedFiles) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach(page => mergedPdf.addPage(page));
+      }
+      const mergedPdfBytes = await mergedPdf.save();
+      const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "PDF-Mesclado.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      document.getElementById("reloadBtn").style.display = "block";
+    });
+
+    // Botão para juntar outro PDF
+    document.getElementById("reloadBtn").addEventListener("click", () => {
+      location.reload();
+    });
+  </script>
+</body>
 </html>

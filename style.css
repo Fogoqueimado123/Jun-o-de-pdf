@@ -89,7 +89,6 @@ body {
   background: #d62828;
 }
 
-/* Responsividade */
 @media (max-width: 600px) {
   .custom-btn,
   .merge-btn {
