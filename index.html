@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Juntar PDFs</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -108,8 +109,6 @@
     .file-item button:hover {
       background: #d62828;
     }
-
-    /* Ajuste extra para mobile */
     @media (max-width: 480px) {
       .file-item {
         flex-direction: column;
@@ -140,7 +139,6 @@
   <script>
     let selectedFiles = [];
 
-    // Ajuste automático de fontes e botões baseado no dispositivo
     function ajustarLayout() {
       const largura = window.innerWidth;
       const botoes = document.querySelectorAll(".custom-btn, .merge-btn, .reload-btn");
@@ -148,7 +146,7 @@
       const texto = document.querySelector("p");
 
       if (largura <= 480) {
-        // Celular
+      
         titulo.style.fontSize = "1.5rem";
         texto.style.fontSize = "1rem";
         botoes.forEach(btn => {
@@ -156,7 +154,7 @@
           btn.style.padding = "12px";
         });
       } else if (largura <= 768) {
-        // Tablet
+
         titulo.style.fontSize = "1.8rem";
         texto.style.fontSize = "1.1rem";
         botoes.forEach(btn => {
@@ -164,7 +162,7 @@
           btn.style.padding = "14px";
         });
       } else {
-        // Computador / Notebook
+
         titulo.style.fontSize = "2rem";
         texto.style.fontSize = "1.2rem";
         botoes.forEach(btn => {
@@ -177,7 +175,7 @@
     window.addEventListener("resize", ajustarLayout);
     window.addEventListener("load", ajustarLayout);
 
-    // Função para selecionar arquivos
+
     document.getElementById("pdfInput").addEventListener("change", function (event) {
       const files = Array.from(event.target.files);
       files.forEach(file => {
@@ -204,7 +202,6 @@
       renderFileList();
     }
 
-    // Mesclar PDFs
     document.getElementById("mergeBtn").addEventListener("click", async () => {
       if (selectedFiles.length < 2) {
         alert("Selecione pelo menos 2 PDFs para juntar.");
@@ -229,10 +226,10 @@
       document.getElementById("reloadBtn").style.display = "block";
     });
 
-    // Botão para juntar outro PDF
     document.getElementById("reloadBtn").addEventListener("click", () => {
       location.reload();
     });
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
