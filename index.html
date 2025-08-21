@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Juntar PDFs</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+<body>
   <style>
-    * {
+     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -53,7 +56,7 @@
       margin: 25px 0;
     }
     
-    /* Estilos para os botões */
+   
     .btn {
       display: inline-block;
       padding: 14px 28px;
@@ -113,7 +116,7 @@
       background: transparent;
     }
     
-    /* Estilos para a lista de arquivos - CORRIGIDO */
+   
     #fileList {
       text-align: left;
       margin-top: 20px;
@@ -135,7 +138,7 @@
       display: flex;
       align-items: center;
       flex: 1;
-      min-width: 0; /* Permite que o texto seja truncado */
+      min-width: 0; 
     }
     
     .file-name {
@@ -148,7 +151,7 @@
     .file-actions {
       display: flex;
       gap: 5px;
-      flex-shrink: 0; /* Impede que os botões encolham */
+      flex-shrink: 0; 
     }
     
     .file-item button {
@@ -171,7 +174,7 @@
       cursor: not-allowed;
     }
     
-    /* Estilos para o rodapé */
+  
     .footer {
       margin-top: 30px;
       text-align: center;
@@ -179,7 +182,7 @@
       font-size: 14px;
     }
     
-    /* Responsividade */
+  
     @media (min-width: 768px) {
       .btn {
         width: auto;
@@ -261,7 +264,7 @@
       }
     }
     
-    /* Estilos para o estado de carregamento */
+    
     .hidden {
       display: none;
     }
@@ -270,7 +273,7 @@
       display: block;
     }
     
-    /* Animação de carregamento */
+ 
     .spinner {
       border: 4px solid rgba(0, 0, 0, 0.1);
       border-left: 4px solid #457b9d;
@@ -286,7 +289,7 @@
       100% { transform: rotate(360deg); }
     }
     
-    /* Estilos para drag and drop */
+   
     .drop-area {
       border: 2px dashed #457b9d;
       border-radius: 8px;
@@ -313,8 +316,6 @@
       margin-bottom: 10px;
     }
   </style>
-</head>
-<body>
   <div class="container">
     <h1>Juntar arquivos PDF</h1>
     <p>Mesclar e juntar PDFs em qualquer ordem. Fácil e rápido!</p>
@@ -359,7 +360,7 @@
   <script>
     let selectedFiles = [];
 
-    // Configuração do drag and drop
+    
     const dropArea = document.getElementById('dropArea');
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
       dropArea.addEventListener(eventName, preventDefaults, false);
@@ -499,7 +500,7 @@
         a.click();
         document.body.removeChild(a);
         
-        // Limpar o URL do objeto
+       
         setTimeout(() => URL.revokeObjectURL(url), 100);
         
         document.getElementById("reloadBtn").classList.remove("hidden");
@@ -518,8 +519,9 @@
       location.reload();
     });
 
-    // Inicializar a lista de arquivos
+   
     renderFileList();
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
