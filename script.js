@@ -117,9 +117,24 @@ function moveDown(index) {
   }
 }
 
+function showMessage(text, type = "info") {
+  const messageElement = document.getElementById("message");
+  messageElement.textContent = text;
+  messageElement.className = "message " + type;
+  messageElement.classList.remove("hidden");
+  messageElement.classList.add("visible");
+
+  if (type === "success") {
+    setTimeout(() => {
+      messageElement.classList.remove("visible");
+      messageElement.classList.add("hidden");
+    }, 5000);
+  }
+}
+
 document.getElementById("mergeBtn").addEventListener("click", async () => {
   if (selectedFiles.length < 2) {
-    alert("Selecione pelo menos 2 PDFs para juntar.");
+    showMessage("Selecione pelo menos 2 PDFs para juntar.", "error");
     return;
   }
 
@@ -127,6 +142,8 @@ document.getElementById("mergeBtn").addEventListener("click", async () => {
   const originalText = mergeBtn.innerHTML;
   mergeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
   mergeBtn.disabled = true;
+
+  document.getElementById("message").classList.add("hidden");
 
   try {
     const mergedPdf = await PDFLib.PDFDocument.create();
@@ -139,7 +156,9 @@ document.getElementById("mergeBtn").addEventListener("click", async () => {
     }
 
     const mergedPdfBytes = await mergedPdf.save();
-    const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+    const blob = new Blob([mergedPdfBytes], {
+      type: "application/pdf",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -150,12 +169,14 @@ document.getElementById("mergeBtn").addEventListener("click", async () => {
 
     setTimeout(() => URL.revokeObjectURL(url), 100);
 
+    showMessage("PDFs juntados e baixados com sucesso!", "success");
     document.getElementById("reloadBtn").classList.remove("hidden");
     document.getElementById("reloadBtn").classList.add("visible");
   } catch (error) {
     console.error("Erro ao processar o PDF:", error);
-    alert(
-      "Ocorreu um erro ao processar os PDFs. Verifique se os arquivos são válidos."
+    showMessage(
+      "Ocorreu um erro ao processar os PDFs. Verifique se os arquivos são válidos.",
+      "error"
     );
   } finally {
     mergeBtn.innerHTML = originalText;
